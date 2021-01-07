@@ -1,4 +1,5 @@
 ID: 1
+Category: PotatoTimeYesterdayTime
 Difficulty: 1
 Name: Whats the time?
 Answer A: Now
@@ -6,9 +7,26 @@ Answer B: Yesterday
 Answer C: Tomorrow
 Answer D: I have no idea m8, frik of
 ID: 2
+Category: Space
 Difficulty: 2
 Name: Whats the time yesterday?
 Answer A: Now, not ever
 Answer B: Yesterday, but now
 Answer C: Tomorrow was yesterday
 Answer D: I have no idea m8, can I ask u kindly to frik of?
+ID: 3
+Category: Potatoes
+Difficulty: 2
+Name: Are potatoes Healthy?
+Answer A: Yes, ofcourse
+Answer B: No, ofcourse
+Answer C: Ye, maybe
+Answer D: No, maybe
+ID: 4
+Category: YesterdayTime
+Difficulty: 1
+Name: Whats was the time yesterday?
+Answer A: Not Now
+Answer B: Not Yesterday
+Answer C: Not Tomorrow
+Answer D: Not dieeee
