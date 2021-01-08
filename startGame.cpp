@@ -3,6 +3,7 @@
 #include<vector>
 #include<stdlib.h>
 #include <fstream>
+#include<time.h>
 using namespace std;
 
 //Functions which will be used in the program
@@ -13,7 +14,6 @@ string clearUnwantedSymbols(int number, string providedString);
 void enterGame();
 
 void newGame();
-void gameQuestion(string category);
 vector<string> foundQuestionInformation(string category, int difficulty);
 
 void addQuestion();
@@ -26,8 +26,8 @@ vector<string> questionInformation;
 
 int main()
 {
+    srand((unsigned) time(0));
     enterGame();
-
     return 0;
 }
 
@@ -70,7 +70,6 @@ void getQuestions()
         br++;
     }
 
-    for(int i=0;i<questionInformation.size();i++)cout<<questionInformation[i]<<endl;
 }
 
 string clearUnwantedSymbols(int number, string providedString)
@@ -142,7 +141,6 @@ void newGame()
     {
         {
             //GET ALL CATEGORIES
-
             //Starting from I=1 and finishes at 'size()-5' since the first line where categories are located is the 2nd, and last one ends at the size of the array - 5;
             for(int lineID=1;lineID<questionInformation.size()-5;lineID+=8)
             {
@@ -167,6 +165,7 @@ void newGame()
             }
 
             categories.push_back("All Categories");
+            //Printing the categories
             for(int i=0;i<categories.size();i++)
             {
                 cout<<i+1<<": "<<categories[i]<<"\n";
@@ -174,6 +173,7 @@ void newGame()
 
         }
 
+        //Player inputing his choice
         cout<<"================================================ \n"<<"Your choice is: ";
         int inputCat;
         cin>>inputCat;
@@ -187,68 +187,117 @@ void newGame()
     }
 
 
+    //
     int currentQuestion = 1, currentPrizeMoney = 0, difficultyQuestion = 0;
-    for(int i=1;i<15;i++)
+    string playerAnswer;
+    if(playerCatChoice!="All Categories")
     {
         vector<string> foundQuestionID;
-        if(i==1 || i==2 || i==3)difficultyQuestion=1;
-        else if(i==4 || i==5 || i==6)difficultyQuestion=2;
-        else if(i==7 || i==8)difficultyQuestion=3;
-        else if(i==9)difficultyQuestion=4;
-        else if(i==10)difficultyQuestion=5;
-        else if(i==11)difficultyQuestion=6;
-        else if(i==12)difficultyQuestion=7;
-        else if(i==13)difficultyQuestion=8;
-        else if(i==14)difficultyQuestion=9;
-        else if(i==15)difficultyQuestion=10;
+        vector<string> alreadyUsedIDs;
+        for(int i=1;i<=15;i++)
+        {
+            int possibleQuestions = 0;
 
 
+            if(i==1 || i==2 || i==3)difficultyQuestion=1;
+            else if(i==4 || i==5 || i==6)difficultyQuestion=2;
+            else if(i==7 || i==8)difficultyQuestion=3;
+            else if(i==9)difficultyQuestion=4;
+            else if(i==10)difficultyQuestion=5;
+            else if(i==11)difficultyQuestion=6;
+            else if(i==12)difficultyQuestion=7;
+            else if(i==13)difficultyQuestion=8;
+            else if(i==14)difficultyQuestion=9;
+            else if(i==15)difficultyQuestion=10;
 
 
+            vector<string> usableIds;
+            for(int categoryID=1;categoryID<questionInformation.size()-6;categoryID+=8)
+            {
+                if(questionInformation[categoryID]==playerCatChoice && questionInformation[categoryID+1]==to_string(difficultyQuestion))
+                {
+                    //This will be used to check if the current ID has been used
+                    bool isNotUsedID=true;
+
+                    /*
+                    if(i!=1){//If it is not the first question, that means we already for sure have and ID we have used
+                        for(int l=0;l<alreadyUsedIDs.size();l++)
+                        {
+                            //If the ID matches a used question, dont add the question to the possible ones that can show to the player
+                            if(questionInformation[categoryID-1]==alreadyUsedIDs[i])
+                            {
+                                isNotUsedID=false;
+                                cout<<"Bananas on ice\n\n\n";
+                            }
+                        }
+                    }
+                    */
+                    for(int l=0;l<alreadyUsedIDs.size();l++)
+                    {
+                        //If the ID matches a used question, dont add the question to the possible ones that can show to the player
+                        if(questionInformation[categoryID-1]==alreadyUsedIDs[l])
+                        {
+                            isNotUsedID=false;
+                        }
+                    }
 
 
+                    if(isNotUsedID)
+                    {
+                        possibleQuestions++;
+                        for(int j=categoryID-1;j<categoryID+7;j++)
+                        {
+                            foundQuestionID.push_back(questionInformation[j]);
+                        }
+                        //Add the ID to the ones we can use
+                        usableIds.push_back(questionInformation[categoryID-1]);
+                    }
+                }
+            }
+            if(!alreadyUsedIDs.empty())
+            {
+                for(int l=0;l<alreadyUsedIDs.size();l++)
+                {
+                    cout<<"#"<<alreadyUsedIDs[l]<<" ";
+                }
+            }
 
 
+            //Random number generator
+            int minValue = 1, maxValue=possibleQuestions;
+            int randomNumberGenerator;
+            if(possibleQuestions==0)randomNumberGenerator=0;
+            //Gets a random value between 1 and the avalible question we can ask
+            else randomNumberGenerator = minValue + (rand() % maxValue);
+
+            cout<<"================================================ \n";
+            vector<string> finalQuestionVector;
+
+            if(randomNumberGenerator!=0)
+            {
+                alreadyUsedIDs.push_back(usableIds[randomNumberGenerator-1]);
+                for(int l=(randomNumberGenerator-1)*8;l<(randomNumberGenerator-1)*8+8;l++)
+                {
+                    finalQuestionVector.push_back(foundQuestionID[l]);
+                }
+
+                cout<<"\nThe Question #"<<i<<" should be the following:\n";
+                for(int l=0;l<finalQuestionVector.size();l++)
+                {
+                    cout<<endl<<finalQuestionVector[l];
+                }
+            }
+            cout<<"================================================ \n\n\n";
 
 
-
-        cout<<"================================================ \n";
-        cout<<"Question #"<<currentQuestion<<":\n";
-
-
-
-
-        cout<<"================================================ \n";
+            cin>>playerAnswer;
+            foundQuestionID.clear();
+        }
     }
-    gameQuestion(playerCatChoice);
+
 
     return;
 }
-
-void gameQuestion(string wantedCategory)
-{
-    if(wantedCategory!="All Categories")
-    {
-        vector<string> wantedCategoryQuestion;
-        for(int lineID=1;lineID<questionInformation.size()-5;lineID+=8)
-        {
-            if(wantedCategory==questionInformation[lineID])
-            {
-                cout<<endl;
-                for(int i=lineID-1;i<lineID+7;i++)
-                {
-                    wantedCategoryQuestion.push_back(questionInformation[i]);
-                    cout<<wantedCategory[i];
-                }
-            }
-        }
-
-    }
-
-
-
-}
-vector<string> foundQuestionInformation(string category, int difficulty);
 
 
 
