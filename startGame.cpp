@@ -270,28 +270,63 @@ void newGame()
             //Gets a random value between 1 and the avalible question we can ask
             else randomNumberGenerator = minValue + (rand() % maxValue);
 
-            cout<<"================================================ \n";
-            vector<string> finalQuestionVector;
 
+
+            //The finalQuestion contains the  question itself, the other speak for themselves
+            string finalQuestion, correctAnswer;
+            vector<string> questionAnswers;
+            int questionID=(randomNumberGenerator-1)*8;
+
+            //If there are questions avalible
             if(randomNumberGenerator!=0)
             {
+                cout<<"================================================ \n";
+                //Add the ID to the used ones
                 alreadyUsedIDs.push_back(usableIds[randomNumberGenerator-1]);
-                for(int l=(randomNumberGenerator-1)*8;l<(randomNumberGenerator-1)*8+8;l++)
+
+                finalQuestion = foundQuestionID[questionID+3];
+                correctAnswer = foundQuestionID[questionID+4];
+                randomNumberGenerator = 1 + (rand() % 4);
+                questionAnswers.push_back(foundQuestionID[questionID+3 + randomNumberGenerator]);
+                while(questionAnswers.size()!=4)
                 {
-                    finalQuestionVector.push_back(foundQuestionID[l]);
+                    bool isUnique=true;
+                    randomNumberGenerator = 1 + (rand() % 4);
+                    for(int l=0;l<questionAnswers.size();l++)
+                    {
+                        if(questionAnswers[l]==foundQuestionID[questionID+3 + randomNumberGenerator])
+                        {
+                            isUnique=false;
+                        }
+                    }
+                    if(isUnique)questionAnswers.push_back(foundQuestionID[questionID+3 + randomNumberGenerator]);
                 }
 
-                cout<<"\nThe Question #"<<i<<" should be the following:\n";
-                for(int l=0;l<finalQuestionVector.size();l++)
+                cout<<"\nThe Question #"<<i<<" should be the following:\n"<<finalQuestion;
+                cout<<"\nA)"<<questionAnswers[0]<<"\nB)"<<questionAnswers[1];
+                cout<<"\nC)"<<questionAnswers[2]<<"\nD)"<<questionAnswers[3];
+
+                cout<<"\n================================================ \nYour choice is: ";
+
+                cin>>playerAnswer;
+                while(playerAnswer!= "A" && playerAnswer!="B" && playerAnswer!="C" && playerAnswer!="D")
                 {
-                    cout<<endl<<finalQuestionVector[l];
+                    cout<<"Incorrect choice, please choose again: ";
+                    cin>>playerAnswer;
                 }
+                clearConsole();
+
+                if(playerAnswer=="A" && questionAnswers[0]==correctAnswer) cout<<"Congrats, your choice is correct! "<<endl;
+                else if(playerAnswer=="B" && questionAnswers[1]==correctAnswer) cout<<"Congrats, your choice is correct! "<<endl;
+                else if(playerAnswer=="C" && questionAnswers[2]==correctAnswer) cout<<"Congrats, your choice is correct! "<<endl;
+                else if(playerAnswer=="D" && questionAnswers[3]==correctAnswer) cout<<"Congrats, your choice is correct! "<<endl;
+                else cout<<"Sorry, incorrect answer"<<endl;
+
+
             }
-            cout<<"================================================ \n\n\n";
 
-
-            cin>>playerAnswer;
             foundQuestionID.clear();
+
         }
     }
 
