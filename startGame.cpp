@@ -192,6 +192,13 @@ void newGame()
     string playerAnswer;
 
     vector<string> foundQuestionID;
+
+    vector<string> avalibleJokers;
+    avalibleJokers.push_back("50/50");
+    avalibleJokers.push_back("Call a friend");
+    avalibleJokers.push_back("Help from audience");
+    string jokerUsed;
+    bool usesJoker=false;
     vector<string> alreadyUsedIDs;
     for(int i=1;i<=15;i++)
     {
@@ -287,18 +294,127 @@ void newGame()
                 if(isUnique)questionAnswers.push_back(foundQuestionID[questionID+3 + randomNumberGenerator]);
             }
 
-            cout<<"\nThe Question #"<<i<<" should be the following:\n"<<finalQuestion;
+            cout<<"\nQuestion #"<<i<<": "<<finalQuestion;
             cout<<"\nA)"<<questionAnswers[0]<<"\nB)"<<questionAnswers[1];
             cout<<"\nC)"<<questionAnswers[2]<<"\nD)"<<questionAnswers[3];
 
+            if(!avalibleJokers.empty())
+            {
+                cout<<"\nYour avalible jokers are: \n";
+                for(int l=0;l<avalibleJokers.size();l++)
+                {
+                    cout<<avalibleJokers[l]<<"; ";
+                }
+            }
             cout<<"\n================================================ \nYour choice is: ";
 
-            cin>>playerAnswer;
-            while(playerAnswer!= "A" && playerAnswer!="B" && playerAnswer!="C" && playerAnswer!="D")
+            getline(cin,playerAnswer);
+            getline(cin,playerAnswer);
+            for(int l=0;l<avalibleJokers.size();l++)
             {
-                cout<<"Incorrect choice, please choose again: ";
-                cin>>playerAnswer;
+                if(playerAnswer==avalibleJokers[l]) usesJoker=true;
             }
+            while((playerAnswer!= "A" && playerAnswer!="B" && playerAnswer!="C" && playerAnswer!="D") && usesJoker==false)
+            {
+                cout<<"Incorrect choice, choose enter again kyrvo: ";
+                getline(cin,playerAnswer);
+                for(int l=0;l<avalibleJokers.size();l++)
+                {
+                    if(playerAnswer==avalibleJokers[l]) usesJoker=true;
+                }
+            }
+            bool isJokerAvalible=false, isFriendAvalible=false, isAudienceAvalible=false;
+            if(!avalibleJokers.empty())for(int h=0;h<avalibleJokers.size();h++)
+            {
+                if(avalibleJokers[h]=="50/50")isJokerAvalible=true;
+                if(avalibleJokers[h]=="Call a friend")isFriendAvalible=true;
+                if(avalibleJokers[h]=="Help from audience")isAudienceAvalible=true;
+            }
+
+            if(usesJoker)
+            {
+                jokerUsed=playerAnswer;
+                //Removing the used joker
+                for(int m=0;m<avalibleJokers.size();m++)
+                {
+                    if(jokerUsed==avalibleJokers[m])
+                    {
+                        avalibleJokers.erase(avalibleJokers.begin()+m);
+                        break;
+                    }
+                }
+                clearConsole();
+                cout<<"================================================ \n";
+                cout<<"\nQuestion #"<<i<<": "<<finalQuestion;
+
+
+                if(jokerUsed=="50/50" && isJokerAvalible)
+                {
+                    int getCorrectID;
+                    for(int z=0;z<4;z++)
+                    {
+                        if(correctAnswer==questionAnswers[z])getCorrectID=z;
+                    }
+
+                    int anotherRandomInt = 1 + (rand() % 4);
+                    int linesShown=0;
+                    while(anotherRandomInt==getCorrectID)anotherRandomInt = 1 + (rand() % 4);
+                    if(anotherRandomInt-1==0 || getCorrectID==0)cout<<"\nA)"<<questionAnswers[0];
+                    if(anotherRandomInt-1==1 || getCorrectID==1)cout<<"\nB)"<<questionAnswers[1];
+                    if(anotherRandomInt-1==2 || getCorrectID==2)cout<<"\nC)"<<questionAnswers[2];
+                    if(anotherRandomInt-1==3 || getCorrectID==3)cout<<"\nD)"<<questionAnswers[3];
+                }
+
+                else if((jokerUsed=="Call a friend" && isFriendAvalible) || (jokerUsed=="Help from audience" && isAudienceAvalible))
+                {
+                    int anotherRandomInt = 1 + (rand() % 10);
+                    cout<<"\nA)"<<questionAnswers[0]<<"\nB)"<<questionAnswers[1];
+                    cout<<"\nC)"<<questionAnswers[2]<<"\nD)"<<questionAnswers[3];
+
+
+                    if(jokerUsed=="Call a friend" && isFriendAvalible)cout<<"\nYour friend thinks the asnwer is: ";
+                    else cout<<"\nThe majority of the audience believes its: ";
+
+                    if(difficultyQuestion<4)
+                    {
+                        if(anotherRandomInt<=7) cout<<correctAnswer<<".\n";
+                        else
+                        {
+                            anotherRandomInt=1 + (rand() % 4);
+                            while(correctAnswer==questionAnswers[anotherRandomInt-1])anotherRandomInt=1 + (rand() % 4);
+                            cout<<questionAnswers[anotherRandomInt-1]<<".\n";
+                        }
+                    }
+
+                    else if(difficultyQuestion<8)
+                    {
+                        if(anotherRandomInt<=4) cout<<correctAnswer<<".\n";
+                        else
+                        {
+                            anotherRandomInt=1 + (rand() % 4);
+                            while(correctAnswer==questionAnswers[anotherRandomInt-1])anotherRandomInt=1 + (rand() % 4);
+                            cout<<questionAnswers[anotherRandomInt-1]<<".\n";
+                        }
+                    }
+
+                    else if(difficultyQuestion<=10)
+                    {
+                        if(anotherRandomInt<=2) cout<<correctAnswer<<".\n";
+                        else
+                        {
+                            anotherRandomInt=1 + (rand() % 4);
+                            while(correctAnswer==questionAnswers[anotherRandomInt-1])anotherRandomInt=1 + (rand() % 4);
+                            cout<<questionAnswers[anotherRandomInt-1]<<".\n";
+                        }
+                    }
+
+
+                }
+                cout<<"\n================================================ \nYour choice is: ";
+                getline(cin,playerAnswer);
+                usesJoker=false;
+            }
+
             clearConsole();
             bool isCorrect=false;
             if(playerAnswer=="A" && questionAnswers[0]==correctAnswer) isCorrect=true;
