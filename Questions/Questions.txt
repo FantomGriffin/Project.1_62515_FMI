@@ -30,3 +30,11 @@ Answer A: Not Now
 Answer B: Not Yesterday
 Answer C: Not Tomorrow
 Answer D: Not dieeee
+ID: 5
+Category: Space
+Difficulty: 1
+Name: Is space empty or full?
+Answer A: FUll of space
+Answer B: Empty of space
+Answer C: Out of space
+Answer D: Suck ma big banana

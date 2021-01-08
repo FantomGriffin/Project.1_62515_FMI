@@ -190,147 +190,167 @@ void newGame()
     //
     int currentQuestion = 1, currentPrizeMoney = 0, difficultyQuestion = 0;
     string playerAnswer;
-    if(playerCatChoice!="All Categories")
+
+    vector<string> foundQuestionID;
+    vector<string> alreadyUsedIDs;
+    for(int i=1;i<=15;i++)
     {
-        vector<string> foundQuestionID;
-        vector<string> alreadyUsedIDs;
-        for(int i=1;i<=15;i++)
+        int possibleQuestions = 0;
+
+
+        if(i==1 || i==2 || i==3)difficultyQuestion=1;
+        else if(i==4 || i==5 || i==6)difficultyQuestion=2;
+        else if(i==7 || i==8)difficultyQuestion=3;
+        else if(i==9)difficultyQuestion=4;
+        else if(i==10)difficultyQuestion=5;
+        else if(i==11)difficultyQuestion=6;
+        else if(i==12)difficultyQuestion=7;
+        else if(i==13)difficultyQuestion=8;
+        else if(i==14)difficultyQuestion=9;
+        else if(i==15)difficultyQuestion=10;
+
+
+        vector<string> usableIds;
+        for(int categoryID=1;categoryID<questionInformation.size()-6;categoryID+=8)
         {
-            int possibleQuestions = 0;
-
-
-            if(i==1 || i==2 || i==3)difficultyQuestion=1;
-            else if(i==4 || i==5 || i==6)difficultyQuestion=2;
-            else if(i==7 || i==8)difficultyQuestion=3;
-            else if(i==9)difficultyQuestion=4;
-            else if(i==10)difficultyQuestion=5;
-            else if(i==11)difficultyQuestion=6;
-            else if(i==12)difficultyQuestion=7;
-            else if(i==13)difficultyQuestion=8;
-            else if(i==14)difficultyQuestion=9;
-            else if(i==15)difficultyQuestion=10;
-
-
-            vector<string> usableIds;
-            for(int categoryID=1;categoryID<questionInformation.size()-6;categoryID+=8)
+            if((questionInformation[categoryID]==playerCatChoice || playerCatChoice=="All Categories") && questionInformation[categoryID+1]==to_string(difficultyQuestion))
             {
-                if(questionInformation[categoryID]==playerCatChoice && questionInformation[categoryID+1]==to_string(difficultyQuestion))
-                {
-                    //This will be used to check if the current ID has been used
-                    bool isNotUsedID=true;
+                //This will be used to check if the current ID has been used
+                bool isNotUsedID=true;
 
-                    /*
-                    if(i!=1){//If it is not the first question, that means we already for sure have and ID we have used
-                        for(int l=0;l<alreadyUsedIDs.size();l++)
-                        {
-                            //If the ID matches a used question, dont add the question to the possible ones that can show to the player
-                            if(questionInformation[categoryID-1]==alreadyUsedIDs[i])
-                            {
-                                isNotUsedID=false;
-                                cout<<"Bananas on ice\n\n\n";
-                            }
-                        }
-                    }
-                    */
-                    for(int l=0;l<alreadyUsedIDs.size();l++)
+                for(int l=0;l<alreadyUsedIDs.size();l++){
+                    //If the ID matches a used question, dont add the question to the possible ones that can show to the player
+                    if(questionInformation[categoryID-1]==alreadyUsedIDs[l])
                     {
-                        //If the ID matches a used question, dont add the question to the possible ones that can show to the player
-                        if(questionInformation[categoryID-1]==alreadyUsedIDs[l])
-                        {
-                            isNotUsedID=false;
-                        }
-                    }
-
-
-                    if(isNotUsedID)
-                    {
-                        possibleQuestions++;
-                        for(int j=categoryID-1;j<categoryID+7;j++)
-                        {
-                            foundQuestionID.push_back(questionInformation[j]);
-                        }
-                        //Add the ID to the ones we can use
-                        usableIds.push_back(questionInformation[categoryID-1]);
+                        isNotUsedID=false;
                     }
                 }
-            }
-            if(!alreadyUsedIDs.empty())
-            {
-                for(int l=0;l<alreadyUsedIDs.size();l++)
+
+                if(isNotUsedID)
                 {
-                    cout<<"#"<<alreadyUsedIDs[l]<<" ";
+                    possibleQuestions++;
+                    for(int j=categoryID-1;j<categoryID+7;j++)
+                    {
+                        foundQuestionID.push_back(questionInformation[j]);
+                    }
+                    //Add the ID to the ones we can use
+                    usableIds.push_back(questionInformation[categoryID-1]);
                 }
             }
+        }
+
+        if(!alreadyUsedIDs.empty())
+        {
+            for(int l=0;l<alreadyUsedIDs.size();l++)
+            {
+                cout<<"#"<<alreadyUsedIDs[l]<<" ";
+            }
+        }
 
 
-            //Random number generator
-            int minValue = 1, maxValue=possibleQuestions;
-            int randomNumberGenerator;
-            if(possibleQuestions==0)randomNumberGenerator=0;
-            //Gets a random value between 1 and the avalible question we can ask
-            else randomNumberGenerator = minValue + (rand() % maxValue);
+        //Random number generator
+        int minValue = 1, maxValue=possibleQuestions;
+        int randomNumberGenerator;
+        if(possibleQuestions==0)randomNumberGenerator=0;
+        //Gets a random value between 1 and the avalible question we can ask
+        else randomNumberGenerator = minValue + (rand() % maxValue);
 
 
 
-            //The finalQuestion contains the  question itself, the other speak for themselves
-            string finalQuestion, correctAnswer;
-            vector<string> questionAnswers;
-            int questionID=(randomNumberGenerator-1)*8;
+        //The finalQuestion contains the  question itself, the other speak for themselves
+        string finalQuestion, correctAnswer;
+        vector<string> questionAnswers;
+        int questionID=(randomNumberGenerator-1)*8;
 
-            //If there are questions avalible
-            if(randomNumberGenerator!=0)
+        //If there are questions avalible
+        if(randomNumberGenerator!=0)
+        {
+            cout<<"================================================ \n";
+            //Add the ID to the used ones
+            alreadyUsedIDs.push_back(usableIds[randomNumberGenerator-1]);
+
+            finalQuestion = foundQuestionID[questionID+3];
+            correctAnswer = foundQuestionID[questionID+4];
+            randomNumberGenerator = 1 + (rand() % 4);
+            questionAnswers.push_back(foundQuestionID[questionID+3 + randomNumberGenerator]);
+            while(questionAnswers.size()!=4)
+            {
+                bool isUnique=true;
+                randomNumberGenerator = 1 + (rand() % 4);
+                for(int l=0;l<questionAnswers.size();l++)
+                {
+                    if(questionAnswers[l]==foundQuestionID[questionID+3 + randomNumberGenerator])
+                    {
+                        isUnique=false;
+                    }
+                }
+                if(isUnique)questionAnswers.push_back(foundQuestionID[questionID+3 + randomNumberGenerator]);
+            }
+
+            cout<<"\nThe Question #"<<i<<" should be the following:\n"<<finalQuestion;
+            cout<<"\nA)"<<questionAnswers[0]<<"\nB)"<<questionAnswers[1];
+            cout<<"\nC)"<<questionAnswers[2]<<"\nD)"<<questionAnswers[3];
+
+            cout<<"\n================================================ \nYour choice is: ";
+
+            cin>>playerAnswer;
+            while(playerAnswer!= "A" && playerAnswer!="B" && playerAnswer!="C" && playerAnswer!="D")
+            {
+                cout<<"Incorrect choice, please choose again: ";
+                cin>>playerAnswer;
+            }
+            clearConsole();
+            bool isCorrect=false;
+            if(playerAnswer=="A" && questionAnswers[0]==correctAnswer) isCorrect=true;
+            else if(playerAnswer=="B" && questionAnswers[1]==correctAnswer) isCorrect=true;
+            else if(playerAnswer=="C" && questionAnswers[2]==correctAnswer) isCorrect=true;
+            else if(playerAnswer=="D" && questionAnswers[3]==correctAnswer) isCorrect=true;
+
+            if(isCorrect)
             {
                 cout<<"================================================ \n";
-                //Add the ID to the used ones
-                alreadyUsedIDs.push_back(usableIds[randomNumberGenerator-1]);
-
-                finalQuestion = foundQuestionID[questionID+3];
-                correctAnswer = foundQuestionID[questionID+4];
-                randomNumberGenerator = 1 + (rand() % 4);
-                questionAnswers.push_back(foundQuestionID[questionID+3 + randomNumberGenerator]);
-                while(questionAnswers.size()!=4)
-                {
-                    bool isUnique=true;
-                    randomNumberGenerator = 1 + (rand() % 4);
-                    for(int l=0;l<questionAnswers.size();l++)
-                    {
-                        if(questionAnswers[l]==foundQuestionID[questionID+3 + randomNumberGenerator])
-                        {
-                            isUnique=false;
-                        }
-                    }
-                    if(isUnique)questionAnswers.push_back(foundQuestionID[questionID+3 + randomNumberGenerator]);
-                }
-
-                cout<<"\nThe Question #"<<i<<" should be the following:\n"<<finalQuestion;
-                cout<<"\nA)"<<questionAnswers[0]<<"\nB)"<<questionAnswers[1];
-                cout<<"\nC)"<<questionAnswers[2]<<"\nD)"<<questionAnswers[3];
-
-                cout<<"\n================================================ \nYour choice is: ";
-
+                currentPrizeMoney+=i*50;
+                cout<<"Congrats, your choice is correct!\nCurrent amount of money = "<<currentPrizeMoney<<".";
+                cout<<"\n================================================ \n";
+                cout<<"If you want to continue, input 1, if you want to go home, input anything else: ";
                 cin>>playerAnswer;
-                while(playerAnswer!= "A" && playerAnswer!="B" && playerAnswer!="C" && playerAnswer!="D")
+                if(playerAnswer!="1")
                 {
-                    cout<<"Incorrect choice, please choose again: ";
-                    cin>>playerAnswer;
+                    clearConsole();
+                    cout<<"================================================ \n";
+                    cout<<"Thank you for playing, see you next time!";
+                    cout<<"\n================================================ \n";
+                    return;
                 }
-                clearConsole();
-
-                if(playerAnswer=="A" && questionAnswers[0]==correctAnswer) cout<<"Congrats, your choice is correct! "<<endl;
-                else if(playerAnswer=="B" && questionAnswers[1]==correctAnswer) cout<<"Congrats, your choice is correct! "<<endl;
-                else if(playerAnswer=="C" && questionAnswers[2]==correctAnswer) cout<<"Congrats, your choice is correct! "<<endl;
-                else if(playerAnswer=="D" && questionAnswers[3]==correctAnswer) cout<<"Congrats, your choice is correct! "<<endl;
-                else cout<<"Sorry, incorrect answer"<<endl;
-
-
+            }
+            else
+            {
+                cout<<"================================================ \n";
+                cout<<"Sorry, your choice is incorrect.The correct answer was: '"<<correctAnswer<<"'.\nYou have earned a total of: "<<currentPrizeMoney/10<<"\nThank you for playing, see you next time!";
+                cout<<"\n================================================ \n";
+                return;
             }
 
-            foundQuestionID.clear();
-
         }
+        else
+        {
+            cout<<"================================================ \n";
+            cout<<"Sorry, it appears there are no questions avalible anymore.\nYou have earned a total of: "<<currentPrizeMoney<<".";
+            cout<<"\nThank you for playing, see you next time!";
+            cout<<"\n================================================ \n";
+            return;
+        }
+        clearConsole();
+        foundQuestionID.clear();
+
     }
 
-
+    cout<<"Congrats, you won! You have accumulated a total of: "<<currentPrizeMoney<<" $!\n";
+    cout<<"If you with to start a new game, enter 1, if you want to go to main menu, enter 2, to quit, chose anything else: ";
+    char choice;
+    cin>>choice;
+    if(choice=='1')newGame();
+    else if(choice=='2')enterGame();
     return;
 }
 
