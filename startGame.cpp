@@ -4,6 +4,8 @@
 #include<stdlib.h>
 #include <fstream>
 #include<time.h>
+#include <sstream>
+#include <stdio.h>
 using namespace std;
 
 //Functions which will be used in the program
@@ -17,6 +19,8 @@ void newGame();
 vector<string> foundQuestionInformation(string category, int difficulty);
 
 void addQuestion();
+int fAppendStr(string str, string filename);
+
 
 void editQuestion();
 
@@ -295,8 +299,8 @@ void newGame()
             }
 
             cout<<"\nQuestion #"<<i<<": "<<finalQuestion;
-            cout<<"\nA)"<<questionAnswers[0]<<"\nB)"<<questionAnswers[1];
-            cout<<"\nC)"<<questionAnswers[2]<<"\nD)"<<questionAnswers[3];
+            cout<<"\n\nA) "<<questionAnswers[0]<<"\nB) "<<questionAnswers[1];
+            cout<<"\nC) "<<questionAnswers[2]<<"\nD) "<<questionAnswers[3]<<endl;
 
             if(!avalibleJokers.empty())
             {
@@ -442,7 +446,7 @@ void newGame()
             else
             {
                 cout<<"================================================ \n";
-                cout<<"Sorry, your choice is incorrect.The correct answer was: '"<<correctAnswer<<"'.\nYou have earned a total of: "<<currentPrizeMoney/10<<"\nThank you for playing, see you next time!";
+                cout<<"Sorry, your choice is incorrect.The correct answer was: '"<<correctAnswer<<"'.\nYou have earned a total of: "<<currentPrizeMoney/2<<"\nThank you for playing, see you next time!";
                 cout<<"\n================================================ \n";
                 return;
             }
@@ -476,81 +480,487 @@ void newGame()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void addQuestion()
 {
-    cout<<"Input question name: ";
-    string iName, aArray[4];
-    cin>>iName;
-    getline(cin, iName);
-    /*for(int i=0;i<qNames.size();i++)
+    cout<<"================================================ \n";
+    //QuestionNames and questionIDs will contain the already used corresponding values
+    vector<string> questionNames, questionIDs;
+
+    for(int lineID=3;lineID<questionInformation.size()-4;lineID+=8)
     {
-        if(iName==qNames[i])
+        questionNames.push_back(questionInformation[lineID]);
+    }
+    for(int lineID=0;lineID<questionInformation.size()-7;lineID+=8)
+    {
+        questionIDs.push_back(questionInformation[lineID]);
+    }
+
+    int maxID;
+    //String to Int
+    stringstream geek(questionIDs[0]);
+    geek >> maxID;
+    for(int i=1;i<questionIDs.size();i++)
+    {
+        int tempIDline=0;
+        stringstream geek(questionIDs[i]);
+        geek >> tempIDline;
+        if(maxID<tempIDline) maxID=tempIDline;
+    }
+
+    maxID++;
+    string qName, aArray[4], qCategory;
+    int Difficulty;
+    cout<<"Input question Name: ";
+    getline(cin, qName);
+    getline(cin, qName);
+    bool isUnique = true;
+    for(int i=0;i<questionNames.size();i++)
+    {
+        if(questionNames[i]==qName)
         {
-            cout<<"Sorry, this question is already part of the question list, returning you to main menu.\n";
-            enterGame();
-            return;
+            isUnique=false;
+            break;
         }
     }
-    */
+
+    //Checking wether a question is unique or already used
+    while(!isUnique)
+    {
+        clearConsole();
+        cout<<"================================================ \n";
+        cout<<"Sorry, this question is already being used, try another one: ";
+        getline(cin, qName);
+        isUnique=true;
+        for(int i=0;i<questionNames.size();i++)
+        {
+            if(questionNames[i]==qName)
+            {
+                isUnique=false;
+                break;
+            }
+        }
+    }
+
     for(int i=0;i<4;i++)
     {
-        cout<<"\nInsert answer #"<<i+1<<" : ";
-        cin>>aArray[i];
+        cout<<"Insert answer #"<<i+1<<" : ";
         getline(cin, aArray[i]);
-        bool isUnique = false;
+        isUnique = false;
         int br = i+1;
+
+        //A second method is order to see whether answers are unique
         while(!isUnique)
         {
             for(int j=0;j<br;j++)
             {
                 if(aArray[i]==aArray[j] && i!=j)
                 {
-                    cout<<"Not Unique!\n"<<aArray[i]<<" = "<<aArray[j]<<"\n";
                      break;
                 }
                 else if(j==br-1)
                 {
-                    cout<<"isUniqe = true\n";
                     isUnique = true;
                 }
             }
             if(!isUnique)
             {
-                cout<<"\nPlease insert a new #"<<i+1<<" answer: ";
+                cout<<"Please insert a new #"<<i+1<<" answer: ";
                 cin>>aArray[i];
                 getline(cin, aArray[i]);
             }
         }
     }
+    clearConsole();
+    cout<<"================================================ \n"<<"Question is: "<<qName;
+
+    cout<<"\n\nChose the  correct answer: \n"<<"\nA) "<<aArray[0]<<"\nB) "<<aArray[1]<<"\nC) "<<aArray[2]<<"\nD) "<<aArray[3]<<endl;
+    string playerCorrectAnswer;
+    cout<<"\nYour choice is: ";
+    cin>>playerCorrectAnswer;
+    while(playerCorrectAnswer!="A" && playerCorrectAnswer!="B" && playerCorrectAnswer!="C" && playerCorrectAnswer!="D")
+    {
+        cout<<"\nPlease, input a correct answer: ";
+        cin>>playerCorrectAnswer;
+    }
+
+
+    string finalQAnswers[4];
+    if(playerCorrectAnswer=="A")
+    {
+        for(int i=0;i<4;i++)
+        {
+            finalQAnswers[i]=aArray[i];
+        }
+    }
+    else if(playerCorrectAnswer=="B")
+    {
+        finalQAnswers[0]=aArray[1];
+        finalQAnswers[1]=aArray[0];
+        for(int i=2;i<4;i++)
+        {
+            finalQAnswers[i]=aArray[i];
+        }
+    }
+    else if(playerCorrectAnswer=="C")
+    {
+        finalQAnswers[0]=aArray[2];
+        for(int i=1;i<3;i++)
+        {
+            finalQAnswers[i]=aArray[i-1];
+        }
+        finalQAnswers[3]=aArray[3];
+    }
+    else if(playerCorrectAnswer=="D")
+    {
+        finalQAnswers[0]=aArray[3];
+        for(int i=1;i<4;i++)
+        {
+            finalQAnswers[i]=aArray[i-1];
+        }
+    }
+
+    cout<<"\nInput category of the question: ";
+    getline(cin, qCategory);
+    getline(cin, qCategory);
+    cout<<"\nThe category inputed is: "<<qCategory<<endl<<"Input the difficulty of the question: ";
+    string qDifficulty;
+    getline(cin, qDifficulty);
+    while(qDifficulty!="1" && qDifficulty!="2" && qDifficulty!="3" && qDifficulty!="4" && qDifficulty!="5" && qDifficulty!="6" && qDifficulty!="7" && qDifficulty!="8" && qDifficulty!="9" && qDifficulty!="10")
+    {
+        cout<<"\nIncorrect choice, please enter again: ";
+        getline(cin, qDifficulty);
+    }
+
+    string txtFileName = "Questions/Questions.txt";
+
+
+    fAppendStr("ID: "+to_string(maxID), txtFileName);
+    fAppendStr("Category: "+qCategory, txtFileName);
+    fAppendStr("Difficulty: "+qDifficulty, txtFileName);
+    fAppendStr("Name: "+qName, txtFileName);
+    fAppendStr("Answer A: "+finalQAnswers[0], txtFileName);
+    fAppendStr("Answer B: "+finalQAnswers[1], txtFileName);
+    fAppendStr("Answer C: "+finalQAnswers[2], txtFileName);
+    fAppendStr("Answer D: "+finalQAnswers[3], txtFileName);
 
     return;
 }
 
+
+int fAppendStr(string str, string filename)
+{
+    ofstream MyFile(filename, ios::app);
+    if (!MyFile.is_open()) return 1;
+    MyFile <<endl<< str;
+    MyFile.close();
+    return 0;
+}
 void editQuestion()
 {
-    cout<<"Edit Game";
+    cout<<"The currenlty used IDs and the corresponding Questions are: ";
+    vector<string> questionNames, questionIDs, tempQuestionNames;
+    vector<int> tempQuestionIDs;
+
+
+
+    for(int lineID=3;lineID<questionInformation.size()-4;lineID+=8)
+    {
+        questionNames.push_back(questionInformation[lineID]);
+    }
+    for(int lineID=0;lineID<questionInformation.size()-7;lineID+=8)
+    {
+        questionIDs.push_back(questionInformation[lineID]);
+    }
+
+    for(int i=0;i<questionIDs.size();i++)
+    {
+        int tempValue;
+        stringstream geek(questionIDs[i]);
+        geek >> tempValue;
+        tempQuestionIDs.push_back(tempValue);
+    }
+    tempQuestionNames=questionNames;
+
+    for(int i=0;i<tempQuestionIDs.size()-1;i++)
+    {
+        int minValue = tempQuestionIDs[i];
+        int idFounder=-1;
+        for(int j=1;j<tempQuestionIDs.size();j++)
+        {
+            int tempValue = tempQuestionIDs[j];
+
+            if(minValue>tempValue)
+            {
+                minValue=tempValue;
+                idFounder=j;
+            }
+        }
+
+        if(idFounder!=-1)
+        {
+            swap(tempQuestionIDs[i], tempQuestionIDs[idFounder]);
+            swap(tempQuestionNames[i], tempQuestionNames[idFounder]);
+        }
+    }
+
+
+
+
+    for(int i=0;i<questionIDs.size();i++)
+    {
+        cout<<"\n ID #"<<tempQuestionIDs[i]<<" stands for: "<<tempQuestionNames[i];
+    }
+
+
+    cout<<"\nInput the ID of the question you want to change/delete: ";
+    string playerIDchoice;
+    cin>>playerIDchoice;
+    bool isCorrect=false;
+    int lineID;
+    while(!isCorrect)
+    {
+        for(int i=0;i<questionIDs.size();i++)
+        {
+            if(questionIDs[i]==playerIDchoice)
+            {
+                isCorrect=true;
+                lineID=i*8;
+            }
+        }
+        if(!isCorrect)
+        {
+            cout<<"\nInput the ID of the question you want to change/delete: ";
+            cin>>playerIDchoice;
+        }
+    }
+
+    cout<<"\nThe corresponding line you chose is :"<<lineID;
+
+    cout<<"\nIf you want to delete this question, type Y.\nTo change this question, type N.\nYour choice is: ";
+    string pChoice;
+    cin>>pChoice;
+    while(pChoice!="Y" && pChoice!="N")
+    {
+        cout<<"\nIf you want to delete this question, type Y.\nTo change this question, type N.\nYour choice is: ";
+        cin>>pChoice;
+    }
+
+    if(pChoice=="N")
+    {
+        string qName, aArray[4], qCategory;
+        int Difficulty;
+        cout<<"Input new question name: ";
+        getline(cin, qName);
+        getline(cin, qName);
+        bool isUnique = true;
+        for(int i=0;i<questionNames.size();i++)
+        {
+            if(questionNames[i]==qName)
+            {
+                isUnique=false;
+                break;
+            }
+        }
+
+        //Checking wether a question is unique or already used
+        while(!isUnique)
+        {
+            clearConsole();
+            cout<<"================================================ \n";
+            cout<<"Sorry, this question is already being used, try another one: ";
+            getline(cin, qName);
+            isUnique=true;
+            for(int i=0;i<questionNames.size();i++)
+            {
+                if(questionNames[i]==qName)
+                {
+                    isUnique=false;
+                    break;
+                }
+            }
+        }
+
+        for(int i=0;i<4;i++)
+        {
+            cout<<"Insert answer #"<<i+1<<" : ";
+            getline(cin, aArray[i]);
+            isUnique = false;
+            int br = i+1;
+
+            //A second method is order to see whether answers are unique
+            while(!isUnique)
+            {
+                for(int j=0;j<br;j++)
+                {
+                    if(aArray[i]==aArray[j] && i!=j)
+                    {
+                         break;
+                    }
+                    else if(j==br-1)
+                    {
+                        isUnique = true;
+                    }
+                }
+                if(!isUnique)
+                {
+                    cout<<"Please insert a new #"<<i+1<<" answer: ";
+                    cin>>aArray[i];
+                    getline(cin, aArray[i]);
+                }
+            }
+        }
+        clearConsole();
+        cout<<"================================================ \n"<<"Question is: "<<qName;
+
+        cout<<"\n\nChose the  correct answer: \n"<<"\nA) "<<aArray[0]<<"\nB) "<<aArray[1]<<"\nC) "<<aArray[2]<<"\nD) "<<aArray[3]<<endl;
+        string playerCorrectAnswer;
+        cout<<"\nYour choice is: ";
+        cin>>playerCorrectAnswer;
+        while(playerCorrectAnswer!="A" && playerCorrectAnswer!="B" && playerCorrectAnswer!="C" && playerCorrectAnswer!="D")
+        {
+            cout<<"\nPlease, input a correct answer: ";
+            cin>>playerCorrectAnswer;
+        }
+
+
+        string finalQAnswers[4];
+        if(playerCorrectAnswer=="A")
+        {
+            for(int i=0;i<4;i++)
+            {
+                finalQAnswers[i]=aArray[i];
+            }
+        }
+        else if(playerCorrectAnswer=="B")
+        {
+            finalQAnswers[0]=aArray[1];
+            finalQAnswers[1]=aArray[0];
+            for(int i=2;i<4;i++)
+            {
+                finalQAnswers[i]=aArray[i];
+            }
+        }
+        else if(playerCorrectAnswer=="C")
+        {
+            finalQAnswers[0]=aArray[2];
+            for(int i=1;i<3;i++)
+            {
+                finalQAnswers[i]=aArray[i-1];
+            }
+            finalQAnswers[3]=aArray[3];
+        }
+        else if(playerCorrectAnswer=="D")
+        {
+            finalQAnswers[0]=aArray[3];
+            for(int i=1;i<4;i++)
+            {
+                finalQAnswers[i]=aArray[i-1];
+            }
+        }
+
+        cout<<"\nInput category of the question: ";
+        getline(cin, qCategory);
+        getline(cin, qCategory);
+        cout<<"\nThe category inputed is: "<<qCategory<<endl<<"Input the difficulty of the question: ";
+        string qDifficulty;
+        getline(cin, qDifficulty);
+        while(qDifficulty!="1" && qDifficulty!="2" && qDifficulty!="3" && qDifficulty!="4" && qDifficulty!="5" && qDifficulty!="6" && qDifficulty!="7" && qDifficulty!="8" && qDifficulty!="9" && qDifficulty!="10")
+        {
+            cout<<"\nIncorrect choice, please enter again: ";
+            getline(cin, qDifficulty);
+        }
+
+        vector<string> newTXTfileINformation;
+
+
+
+
+
+
+        string fileName = "Questions/Questions.txt";
+
+        ifstream myFile(fileName);
+        if (!myFile.is_open())
+        {
+            clearConsole();
+            cout<<"Sorry, there was an error opening the questions directory, please try again later.\n";
+            return; // Unable to open file
+        }
+
+        //Make a temporary char array to be used to push elements in the vector containing info about the questions
+        const size_t STRING_SIZE = 10000;
+        char tempStrLine[STRING_SIZE];
+
+        //Adding all the lines from the txt file before the one we need to replace
+        int lineCounter=0;
+        int br=0, symbolDiff=0;
+        while (!myFile.eof()){
+            if(lineCounter==lineID)break;
+
+            myFile.getline(tempStrLine, STRING_SIZE);
+            while(br>7)br-=8;
+            if(br==0)symbolDiff=4;
+            else if(br==2)symbolDiff=12;
+            else if(br==3)symbolDiff=6;
+            else symbolDiff=10;
+            newTXTfileINformation.push_back(clearUnwantedSymbols(symbolDiff,tempStrLine));
+            lineCounter++;
+            br++;
+        }
+
+        newTXTfileINformation.push_back(questionInformation[lineID]);
+        newTXTfileINformation.push_back(qCategory);
+        newTXTfileINformation.push_back(qDifficulty);
+        newTXTfileINformation.push_back(qName);
+
+        for(int i=0;i<4;i++)
+        {
+            newTXTfileINformation.push_back(aArray[i]);
+        }
+        cout<<"Currently newTXTinfo has: ";
+        for(int i=0;i<newTXTfileINformation.size();i++)
+        {
+            if(i%8==0)cout<<endl;
+            cout<<endl<<newTXTfileINformation[i];
+
+        }
+
+        lineCounter=0;
+
+        br=0, symbolDiff=0;
+        while (!myFile.eof()){
+                myFile.getline(tempStrLine, STRING_SIZE);
+            if(lineCounter>=lineID+8)
+            {
+
+                while(br>7)br-=8;
+                if(br==0)symbolDiff=4;
+                else if(br==2)symbolDiff=12;
+                else if(br==3)symbolDiff=6;
+                else symbolDiff=10;
+                br++;
+                newTXTfileINformation.push_back(clearUnwantedSymbols(symbolDiff,tempStrLine));
+            }
+            lineCounter++;
+        }
+
+        clearConsole();
+        cout<<"THE NEW INFO IS: ";
+
+
+        for(int i=0;i<newTXTfileINformation.size();i++)
+        {
+            if(i%8==0)cout<<endl;
+            cout<<"\n"<<newTXTfileINformation[i];
+        }
+
+        clearConsole();
+
+        char deleteFileName[] = "Questions/Questions.txt";
+        remove(deleteFileName);
+        if(remove(deleteFileName)!=0)cout<<endl<<"KYCHE";
+        else cout<<"\nAAAAAAAAAAA";
+
+    }
     return;
 }
