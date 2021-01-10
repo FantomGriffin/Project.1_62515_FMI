@@ -1,72 +1,152 @@
 ID: 1
-Category: Potatoes
+Category: General
 Difficulty: 1
-Name: Whats the time?
-Answer A: Now
-Answer B: Yesterday
-Answer C: Tomorrow
-Answer D: potato FOREVAAA
+Name: Which county cricket side is based at Chester-le-Street?
+Answer A: Durham
+Answer B: Warwickshire
+Answer C: Northants
+Answer D: Leicestershire
 ID: 2
-Category: Space
-Difficulty: 2
-Name: Whats the time yesterday?
-Answer A: Now, not ever
-Answer B: Yesterday, but now
-Answer C: Tomorrow was yesterday
-Answer D: I have no idea m8, can I ask u kindly to frik of?
+Category: General
+Difficulty: 1
+Name: Which monarch was known as "the wisest fool in Christendom"?
+Answer A: James I
+Answer B: Charles I
+Answer C: Edward I
+Answer D: Henry I
 ID: 3
-Category: Potatoes
-Difficulty: 2
-Name: Are potatoes Healthy?
-Answer A: Yes, ofcourse
-Answer B: No, ofcourse
-Answer C: Ye, maybe
-Answer D: No, maybe
+Category: General
+Difficulty: 1
+Name: Which king was married to Eleanor of Aquitaine?
+Answer A: Henry II
+Answer B: Henry I
+Answer C: Richard I
+Answer D: Henry V
 ID: 4
-Category: Potatoes
-Difficulty: 1
-Name: Whats was the time yesterday?
-Answer A: Not Now
-Answer B: Not Yesterday
-Answer C: Not Tomorrow
-Answer D: Not dieeee
+Category: General
+Difficulty: 2
+Name: Oberon is the satellite of which planet?
+Answer A: Uranus
+Answer B: Neptune
+Answer C: Mars
+Answer D: Mercury
 ID: 5
-Category: Space
-Difficulty: 1
-Name: Is space empty or full?
-Answer A: FUll of space
-Answer B: Empty of space
-Answer C: Out of space
-Answer D: Suck ma big banana
+Category: General
+Difficulty: 2
+Name: In 1912, former US President Theodore Roosevelt was a candidate for which political party?
+Answer A: Bull Moose
+Answer B: Bull Dog
+Answer C: Bull Frog
+Answer D: Bull Elephant
 ID: 6
-Category: My black big potato
-Difficulty: 1
-Name: Is my black potato big
-Answer A: Where's it?
-Answer B: Meh
-Answer C: Biggg
-Answer D: Mhhmmm, tastyyyyy
+Category: General
+Difficulty: 2
+Name: Tomas Masaryk was the first president of which country?
+Answer A: Czechoslovakia
+Answer B: Poland
+Answer C: Yugoslavia
+Answer D: Hungary
 ID: 7
-Category: Potatoes
-Difficulty: 1
-Name: How big is my banana?
-Answer A: What banana?
-Answer B: Banana
-Answer C: Unique
-Answer D: Elementary
+Category: General
+Difficulty: 3
+Name: If you planted the seeds of 'Quercus robur', what would grow?
+Answer A: Trees
+Answer B: Flowers
+Answer C: Grain
+Answer D: Vegetables
 ID: 8
-Category: Bed Relaated
-Difficulty: 1
-Name: What grade am I going to get laid?
-Answer A: 10
-Answer B: 1
-Answer C: banana
-Answer D: 6
+Category: General
+Difficulty: 3
+Name: A number one followed by one hundred zeros is known by what name?
+Answer A: Googol
+Answer B: Megatron
+Answer C: Nanomole
+Answer D: Gigabit
 ID: 9
-Category: Sex
+Category: General
+Difficulty: 4
+Name: Which scientific unit is named after an Italian nobleman?
+Answer A: Volt
+Answer B: Pascal
+Answer C: Ohm
+Answer D: Hertz
+ID: 10
+Category: General
+Difficulty: 5
+Name: What was the occupation of the composer Borodin?
+Answer A: Chemist
+Answer B: Naval captain
+Answer C: Lawyer
+Answer D: Chef
+ID: 11
+Category: General
+Difficulty: 6
+Name: Which of these is a butterfly, not a moth?
+Answer A: Speckled Wood
+Answer B: Red Underwing
+Answer C: Mother Shipton
+Answer D: Burnished Brass
+ID: 12
+Category: General
+Difficulty: 7
+Name: Which of these is not one of the American Triple Crown horse races?
+Answer A: Arlington Million
+Answer B: Belmont Stakes
+Answer C: Preakness Stakes
+Answer D: Kentucky Derby
+ID: 13
+Category: General
+Difficulty: 8
+Name: Translated from the Latin, what is the motto of the United States?
+Answer A: One out of many
+Answer B: In God we trust
+Answer C: All as one
+Answer D: Striving together
+ID: 14
+Category: General
+Difficulty: 9
+Name: Who was the first man to travel into space twice?
+Answer A: Arlington Million
+Answer B: Belmont Stakes
+Answer C: Preakness Stakes
+Answer D: Kentucky Derby
+ID: 15
+Category: General
+Difficulty: 10
+Name: What grade will I get from this project?
+Answer A: 6
+Answer B: 2
+Answer C: banana
+Answer D: Dog
+ID: 16
+Category: Stupid
 Difficulty: 1
-Name: Banana
-Answer A: Big black hard
-Answer B: Potatoes
-Answer C: Long and juicy
-Answer D: pewdiepie
+Name: What is the time?
+Answer A: Now
+Answer B: Never
+Answer C: When
+Answer D: WHY is GAMORA?
+ID: 17
+Category: Stupid
+Difficulty: 1
+Name: How old am I?
+Answer A: Today years old
+Answer B: 20
+Answer C: 18
+Answer D: Never old
+ID: 18
+Category: Stupid
+Difficulty: 1
+Name: What am I?
+Answer A: Stupid
+Answer B: Potato
+Answer C: Salamander
+Answer D: Banana
+ID: 19
+Category: Stupid
+Difficulty: 2
+Name: Am I dead?
+Answer A: No, but now I wish you are
+Answer B: Yes
+Answer C: What?
+Answer D: Doggi
