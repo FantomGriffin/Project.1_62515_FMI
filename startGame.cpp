@@ -53,13 +53,13 @@ void getQuestions()
     {
         clearConsole();
         cout<<"Sorry, there was an error opening the questions directory, please try again later.\n";
+        exit(0);
         return; // Unable to open file
     }
 
     //Make a temporary char array to be used to push elements in the vector containing info about the questions
     const size_t STRING_SIZE = 10000;
     char tempStrLine[STRING_SIZE];
-
     int br=0;
     int symbolDiff=0;
     while (!myFile.eof()){
@@ -73,6 +73,7 @@ void getQuestions()
         questionInformation.push_back(clearUnwantedSymbols(symbolDiff,tempStrLine));
         br++;
     }
+    myFile.close();
 
 }
 
@@ -884,6 +885,7 @@ void editQuestion()
         {
             clearConsole();
             cout<<"Sorry, there was an error opening the questions directory, please try again later.\n";
+            exit(0);
             return; // Unable to open file
         }
 
@@ -930,7 +932,7 @@ void editQuestion()
         br=0, symbolDiff=0;
         while (!myFile.eof()){
                 myFile.getline(tempStrLine, STRING_SIZE);
-            if(lineCounter>=lineID+8)
+            if(lineCounter>=8)
             {
 
                 while(br>7)br-=8;
@@ -953,13 +955,42 @@ void editQuestion()
             if(i%8==0)cout<<endl;
             cout<<"\n"<<newTXTfileINformation[i];
         }
-
+        cin>>playerCorrectAnswer;
         clearConsole();
+        myFile.close();
 
         char deleteFileName[] = "Questions/Questions.txt";
-        remove(deleteFileName);
-        if(remove(deleteFileName)!=0)cout<<endl<<"KYCHE";
+        cout<<"delete is: "<<deleteFileName<<"ZZZZ\n";
+
+        if(remove(deleteFileName)!=0)
+        {
+            clearConsole();
+            cout<<"Sorry, there was an error editing the question, please close the TXT file and try again.";
+
+        }
         else cout<<"\nAAAAAAAAAAA";
+
+
+
+
+        ofstream outfile (deleteFileName);
+        int counterLines=0;
+        for(int i=0;i<newTXTfileINformation.size();i++)
+        {
+            if(counterLines==0) outfile << "ID: "<<newTXTfileINformation[i]<<endl;
+            else if(counterLines==1) outfile << "Category: "<<newTXTfileINformation[i]<<endl;
+            else if(counterLines==2) outfile << "Difficuty: "<<newTXTfileINformation[i]<<endl;
+            else if(counterLines==3) outfile << "Name: "<<newTXTfileINformation[i]<<endl;
+            else if(counterLines==4) outfile << "Answer A: "<<newTXTfileINformation[i]<<endl;
+            else if(counterLines==5) outfile << "Answer B: "<<newTXTfileINformation[i]<<endl;
+            else if(counterLines==6) outfile << "Answer C: "<<newTXTfileINformation[i]<<endl;
+            else if(counterLines==7 && i==newTXTfileINformation.size()-1) outfile << "Answer D: "<<newTXTfileINformation[i];
+            else if(counterLines==7) outfile << "Answer D: "<<newTXTfileINformation[i]<<endl;
+            counterLines++;
+            if(counterLines==8)counterLines=0;
+        }
+
+        outfile.close();
 
     }
     return;

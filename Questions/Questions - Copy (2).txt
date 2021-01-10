@@ -1,6 +1,6 @@
 ID: 1
 Category: Potatoes
-Difficuty: 
+Difficulty: 1
 Name: Whats the time?
 Answer A: Now
 Answer B: Yesterday
@@ -8,31 +8,31 @@ Answer C: Tomorrow
 Answer D: potato FOREVAAA
 ID: 2
 Category: Space
-Difficuty: 
+Difficulty: 2
 Name: Whats the time yesterday?
 Answer A: Now, not ever
 Answer B: Yesterday, but now
 Answer C: Tomorrow was yesterday
 Answer D: I have no idea m8, can I ask u kindly to frik of?
 ID: 3
-Category: 1
-Difficuty: 
-Name: 1
-Answer A: 1
-Answer B: 2
-Answer C: 3
-Answer D: 4
+Category: Potatoes
+Difficulty: 2
+Name: Are potatoes Healthy?
+Answer A: Yes, ofcourse
+Answer B: No, ofcourse
+Answer C: Ye, maybe
+Answer D: No, maybe
 ID: 4
-Category: 1
-Difficuty: 1
-Name: 2
-Answer A: 1
-Answer B: 2
-Answer C: 3
-Answer D: 4
+Category: Potatoes
+Difficulty: 1
+Name: Whats was the time yesterday?
+Answer A: Not Now
+Answer B: Not Yesterday
+Answer C: Not Tomorrow
+Answer D: Not dieeee
 ID: 5
 Category: Space
-Difficuty: 
+Difficulty: 1
 Name: Is space empty or full?
 Answer A: FUll of space
 Answer B: Empty of space
@@ -40,7 +40,7 @@ Answer C: Out of space
 Answer D: Suck ma big banana
 ID: 6
 Category: My black big potato
-Difficuty: 
+Difficulty: 1
 Name: Is my black potato big
 Answer A: Where's it?
 Answer B: Meh
@@ -48,7 +48,7 @@ Answer C: Biggg
 Answer D: Mhhmmm, tastyyyyy
 ID: 7
 Category: Potatoes
-Difficuty: 
+Difficulty: 1
 Name: How big is my banana?
 Answer A: What banana?
 Answer B: Banana
@@ -56,7 +56,7 @@ Answer C: Unique
 Answer D: Elementary
 ID: 8
 Category: Bed Relaated
-Difficuty: 
+Difficulty: 1
 Name: What grade am I going to get laid?
 Answer A: 10
 Answer B: 1
@@ -64,7 +64,7 @@ Answer C: banana
 Answer D: 6
 ID: 9
 Category: Sex
-Difficuty: 
+Difficulty: 1
 Name: Banana
 Answer A: Big black hard
 Answer B: Potatoes
