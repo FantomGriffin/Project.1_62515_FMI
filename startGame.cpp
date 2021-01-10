@@ -108,6 +108,7 @@ string clearUnwantedSymbols(int number, string providedString)
 void enterGame()
 {
     getQuestions();
+
     cout<<"======== Who Wants to Be a Millionaire? ======== \n"<<"1: New game\n"<<"2: New question\n"<<"3: Edit existing question\n"<<"0: Quit the game\n";
     cout<<"================================================ \n"<<"Your choice is: ";
     char choice;
@@ -955,42 +956,45 @@ void editQuestion()
             if(i%8==0)cout<<endl;
             cout<<"\n"<<newTXTfileINformation[i];
         }
+
+
+        cout<<endl;
         cin>>playerCorrectAnswer;
         clearConsole();
         myFile.close();
 
         char deleteFileName[] = "Questions/Questions.txt";
-        cout<<"delete is: "<<deleteFileName<<"ZZZZ\n";
-
         if(remove(deleteFileName)!=0)
         {
             clearConsole();
             cout<<"Sorry, there was an error editing the question, please close the TXT file and try again.";
 
         }
-        else cout<<"\nAAAAAAAAAAA";
 
 
-
+        int counterLines=0;
 
         ofstream outfile (deleteFileName);
-        int counterLines=0;
+
+        clearConsole();
+
+        cin>>playerCorrectAnswer;
         for(int i=0;i<newTXTfileINformation.size();i++)
         {
             if(counterLines==0) outfile << "ID: "<<newTXTfileINformation[i]<<endl;
             else if(counterLines==1) outfile << "Category: "<<newTXTfileINformation[i]<<endl;
-            else if(counterLines==2) outfile << "Difficuty: "<<newTXTfileINformation[i]<<endl;
+            else if(counterLines==2) outfile << "Difficulty: "<<newTXTfileINformation[i]<<endl;
             else if(counterLines==3) outfile << "Name: "<<newTXTfileINformation[i]<<endl;
             else if(counterLines==4) outfile << "Answer A: "<<newTXTfileINformation[i]<<endl;
             else if(counterLines==5) outfile << "Answer B: "<<newTXTfileINformation[i]<<endl;
             else if(counterLines==6) outfile << "Answer C: "<<newTXTfileINformation[i]<<endl;
+            else if(counterLines==7 && i!=newTXTfileINformation.size()-1) outfile << "Answer D: "<<newTXTfileINformation[i]<<endl;
             else if(counterLines==7 && i==newTXTfileINformation.size()-1) outfile << "Answer D: "<<newTXTfileINformation[i];
-            else if(counterLines==7) outfile << "Answer D: "<<newTXTfileINformation[i]<<endl;
             counterLines++;
             if(counterLines==8)counterLines=0;
         }
 
-        outfile.close();
+        enterGame();
 
     }
     return;
