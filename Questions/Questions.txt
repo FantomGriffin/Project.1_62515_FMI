@@ -118,27 +118,3 @@ Answer A: 6
 Answer B: 2
 Answer C: banana
 Answer D: Dog
-ID: 16
-Category: Stupid
-Difficulty: 1
-Name: What is the time?
-Answer A: Now
-Answer B: Never
-Answer C: When
-Answer D: WHY is GAMORA?
-ID: 17
-Category: Stupid
-Difficulty: 1
-Name: How old am I?
-Answer A: Today years old
-Answer B: 20
-Answer C: 18
-Answer D: Never old
-ID: 18
-Category: Stupid
-Difficulty: 1
-Name: What am I?
-Answer A: Stupid
-Answer B: Potato
-Answer C: Salamander
-Answer D: Banana

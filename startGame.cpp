@@ -217,7 +217,9 @@ void enterGame()
     {
     case '0':
         clearConsole();
-        cout << pad << "Thank you for playing the game, goodbye!\n\n"<<pad;
+        cout << pad;
+        centerText("Thank you for playing the game, goodbye!\n\n", false);
+        cout<<pad;
         exit(0);
     case '1':
         clearConsole();
@@ -240,7 +242,8 @@ void enterGame()
 
 void newGame()
 {
-    cout << pad << "Select specific category: \n";
+    cout << pad;
+    centerText("Select specific category: \n", false);
 
     vector<string> categories;
     string playerCatChoice;
@@ -277,13 +280,15 @@ void newGame()
             //Printing the categories
             for(int i = 0; i < categories.size(); i++)
             {
-                cout << i + 1 << ": " << categories[i] << "\n";
+                string tempStr = to_string(i+1) + ": "+categories[i]+"\n";
+                centerText(tempStr, false);
             }
 
         }
 
         //Player entering his choice
-        cout << endl << pad << "Your choice is: ";
+        cout << endl << pad;
+        centerText("Your choice is: ", false);
         int inputCat;
         cin >> inputCat;
         while(inputCat < 1 || inputCat > categories.size())
@@ -400,7 +405,6 @@ void newGame()
             cout << endl << pad << "Your choice is: ";
 
             //Player entering his choice
-            getline(cin, playerAnswer);
             getline(cin, playerAnswer);
 
             for(int j = 0; j < avalibleJokers.size(); j++)
@@ -759,6 +763,15 @@ void addQuestion()
     fAppendStr("Answer B: " + finalQAnswers[1], txtFileName);
     fAppendStr("Answer C: " + finalQAnswers[2], txtFileName);
     fAppendStr("Answer D: " + finalQAnswers[3], txtFileName);
+    clearConsole();
+
+    cout << pad;
+    centerText("Enter anything to go back to the main menu: ", false);
+    char c;
+    cin >> c;
+    enterGame();
+    exit(0);
+
     return;
 }
 
