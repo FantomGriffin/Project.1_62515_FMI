@@ -142,11 +142,3 @@ Answer A: Stupid
 Answer B: Potato
 Answer C: Salamander
 Answer D: Banana
-ID: 19
-Category: Stupid
-Difficulty: 2
-Name: Am I dead?
-Answer A: No, but now I wish you are
-Answer B: Yes
-Answer C: What?
-Answer D: Doggi

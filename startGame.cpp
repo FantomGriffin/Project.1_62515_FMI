@@ -1,3 +1,18 @@
+/**
+*
+* Solution to course project # 1
+* Introduction to programming course
+* Faculty of Mathematics and Informatics of Sofia University
+* Winter semester 2020/2021
+*
+* @author Lachezar Tsvetkov
+* @idnumber 62515
+* @compiler GCC
+*
+* The main file with all functions
+*
+*/
+
 #include<iostream>
 #include<string>
 #include<vector>
@@ -7,13 +22,22 @@
 #include <sstream>
 #include <stdio.h>
 #include <iomanip>
+#include <windows.h>
 using namespace std;
 
 //Functions which will be used in the program
-string pad = "================================================ \n\n";
-string fileName = "Questions/Questions.txt";
+const string pad = "===============================================================================================\n\n", fileName = "Questions/Questions.txt";
 const int numberOfAnswers = 4, linesPerQuestion = 8;
-
+void centerText(string text, bool newLine)
+{
+    int n = text.length();
+    for(int i = 0; i < (95 - n) / 2; i++)
+    {
+        cout<<" ";
+    }
+    cout<< text;
+    if(newLine) cout<<endl;
+}
 
 void clearConsole()
 {
@@ -39,36 +63,13 @@ int getQuestionDifficulty(int questionNumber)
         {
             return 3;
         }
-        else if(questionNumber == 9)
-        {
-            return 4;
-        }
-        else if(questionNumber == 10)
-        {
-            return 5;
-        }
-        else if(questionNumber == 11)
-        {
-            return 6;
-        }
-        else if(questionNumber == 12)
-        {
-            return 7;
-        }
-        else if(questionNumber == 13)
-        {
-            return 8;
-        }
-        else if(questionNumber == 14)
-        {
-            return 9;
-        }
         else
         {
-            return 10;
+            return (questionNumber-5);
         }
         return 0;
 }
+
 
 void enterGame();
 void getQuestions();
@@ -112,6 +113,12 @@ vector<string> questionInformation;
 
 int main()
 {
+    HWND console = GetConsoleWindow();
+    RECT r;
+    GetWindowRect(console, &r); //stores the console's current dimensions
+
+    MoveWindow(console, r.left, r.top, 800, 400, TRUE); // 800 width, 100 height
+
     srand((unsigned) time(0));
     enterGame();
     return 0;
@@ -196,8 +203,14 @@ void enterGame()
     clearConsole();
     getQuestions();
 
-    cout << "======== Who Wants to Be a Millionaire? ======== \n\n" << "1: New game\n" << "2: New question\n" << "3: Edit existing question\n" << "0: Quit the game\n";
-    cout << endl << pad << "Your choice is: ";
+    string nGame = "1: New game\n", nQuestion = "2: New question\n", eQuestion = "3: Edit existing question\n", eGame = "0: Quit game\n", pChoice = "Your choice is: ";
+    cout << "=============================== Who Wants to Be  a Millionaire? ===============================\n\n";
+    centerText(nGame, true);
+    centerText(nQuestion, true);
+    centerText(eQuestion, true);
+    centerText(eGame, true);
+    cout << endl << pad;
+    centerText(pChoice, false);
     char choice;
     cin >> choice;
     switch(choice)
@@ -808,7 +821,7 @@ void editQuestion()
 
     for(int i = 0; i < questionIDs.size(); i++)
     {
-        cout << "\n   ID #" << tempQuestionIDs[i] << " stands for: " << tempQuestionNames[i];
+        cout << "\n " << setw(4) << "ID #" << setw(4) << tempQuestionIDs[i] << " stands for: " << tempQuestionNames[i];
     }
 
 
@@ -1099,7 +1112,6 @@ void editQuestion()
         cin>>c;
 
         enterGame();
-
 
     }
 
