@@ -868,7 +868,7 @@ void editQuestion()
         }
     }
     clearConsole();
-    cout << pad << "If you want to delete this question, type 'Delete'. \nTo change this question, type 'Change'.\n\n" << pad << "Your choice is: ";
+    cout << pad << "If you want to delete this question, type 'Delete'.\nTo change this question, type 'Change'.\n\n" << pad << "Your choice is: ";
     //Starting to use playerIDchoice as a player sectionChoice
     getline(cin, playerIDchoice);
     while(playerIDchoice!="Delete" && playerIDchoice!="Change")
