@@ -642,7 +642,7 @@ void addQuestion()
     while(!isUnique)
     {
         clearConsole();
-        cout << pad << "Sorry, this question is already being used, try another one: ";
+        cout << pad <<"Sorry, this question is already being used, try another one: ";
         getline(cin, qName);
         isUnique = true;
         for(int i = 0; i < questionNames.size(); i++)

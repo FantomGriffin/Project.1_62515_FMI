@@ -1,7 +1,7 @@
 ID: 1
 Category: General
 Difficulty: 1
-Name: Which county cricket side is based at Chester-le-Street?
+Name: Which county cricket side is based at Chester-le-Street ?
 Answer A: Durham
 Answer B: Warwickshire
 Answer C: Northants
